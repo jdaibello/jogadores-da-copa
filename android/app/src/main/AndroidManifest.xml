@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.org.vntsummit.jogadores_da_copa">
    <application
-        android:label="jogadores_da_copa"
+        android:label="Jogadores da Copa"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
