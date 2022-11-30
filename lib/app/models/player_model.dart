@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class PlayerModel {
-  final String id;
+  final int id;
   final String name;
 
   PlayerModel({
@@ -18,8 +18,8 @@ class PlayerModel {
 
   factory PlayerModel.fromMap(Map<String, dynamic> map) {
     return PlayerModel(
-      id: map['id'] ?? '',
-      name: map['name'] ?? '',
+      id: map['player']['id'] ?? '',
+      name: map['player']['name'] ?? '',
     );
   }
 

@@ -29,16 +29,15 @@ class _HomePageState extends State<HomePage> {
       },
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget._homeController.getPlayers();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await widget._homeController.getPlayers();
+      List<PlayerModel> players = widget._homeController.playersFetched;
+      debugPrint('$players');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<PlayerModel> players = widget._homeController.playersFetched;
-    debugPrint('$players');
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),

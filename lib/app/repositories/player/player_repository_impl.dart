@@ -23,7 +23,6 @@ class PlayerRepositoryImpl implements PlayerRepository {
         'season': 2022,
       });
 
-      // TODO: Player data aren't being fetched correctly
       return result.data['response']
           ?.map<PlayerModel>(
             (player) => PlayerModel.fromMap(player),
