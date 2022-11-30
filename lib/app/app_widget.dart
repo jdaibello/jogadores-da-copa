@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jogadores_da_copa/app/core/navigator/jogadores_da_copa_navigator.dart';
 import 'package:jogadores_da_copa/app/core/ui/ui_config.dart';
-import 'package:jogadores_da_copa/app/modules/splash/splash_page.dart';
+import 'package:jogadores_da_copa/app/modules/home/home_module.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -19,7 +19,9 @@ class AppWidget extends StatelessWidget {
         navigatorKey: JogadoresDaCopaNavigator.navigatorKey,
         navigatorObservers: [Asuka.asukaHeroController],
         builder: Asuka.builder,
-        home: const SplashPage(),
+        routes: {
+          ...HomeModule().routers,
+        },
       ),
     );
   }

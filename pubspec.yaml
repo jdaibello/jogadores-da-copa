@@ -31,6 +31,7 @@ environment:
 dependencies:
   asuka: ^2.0.1+3
   cupertino_icons: ^1.0.2
+  dio: ^4.0.6
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.0.2
