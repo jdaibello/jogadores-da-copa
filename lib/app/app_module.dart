@@ -21,17 +21,6 @@ class AppModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-<<<<<<< HEAD
-        Provider(
-          create: (_) => LoggerAppLoggerImpl(),
-        ),
-        Provider(
-          create: (_) => SharedPreferencesLocalStorageImpl(),
-        ),
-        Provider(
-          create: (_) => FlutterSecureStorageLocalSecureStorageImpl(),
-        ),
-=======
         Provider<AppLogger>(
           create: (_) => LoggerAppLoggerImpl(),
         ),
@@ -59,7 +48,6 @@ class AppModule extends StatelessWidget {
             playerRepository: context.read(),
           ),
         ),
->>>>>>> 3cab58d7df3775394451546703d19b3be81c1927
       ],
       child: const AppWidget(),
     );
