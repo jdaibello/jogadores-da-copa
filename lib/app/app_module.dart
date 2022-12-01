@@ -9,10 +9,11 @@ import 'package:jogadores_da_copa/app/core/logger/app_logger.dart';
 import 'package:jogadores_da_copa/app/core/logger/logger_app_logger_impl.dart';
 import 'package:jogadores_da_copa/app/core/rest_client/dio/dio_rest_client.dart';
 import 'package:jogadores_da_copa/app/core/rest_client/rest_client.dart';
-import 'package:jogadores_da_copa/app/repositories/player/player_repository.dart';
-import 'package:jogadores_da_copa/app/repositories/player/player_repository_impl.dart';
-import 'package:jogadores_da_copa/app/services/player/player_service.dart';
-import 'package:jogadores_da_copa/app/services/player/player_service_impl.dart';
+import 'package:jogadores_da_copa/app/modules/splash/splash_controller.dart';
+import 'package:jogadores_da_copa/app/repositories/splash/splash_repository.dart';
+import 'package:jogadores_da_copa/app/repositories/splash/splash_repository_impl.dart';
+import 'package:jogadores_da_copa/app/services/splash/splash_service.dart';
+import 'package:jogadores_da_copa/app/services/splash/splash_service_impl.dart';
 import 'package:provider/provider.dart';
 
 class AppModule extends StatelessWidget {
@@ -41,15 +42,21 @@ class AppModule extends StatelessWidget {
             log: context.read(),
           ),
         ),
-        Provider<PlayerRepository>(
-          create: (_) => PlayerRepositoryImpl(
+        Provider<SplashRepository>(
+          create: (context) => SplashRepositoryImpl(
             restClient: context.read(),
+            sqliteConnectionFactory: context.read(),
             log: context.read(),
           ),
         ),
-        Provider<PlayerService>(
-          create: (_) => PlayerServiceImpl(
-            playerRepository: context.read(),
+        Provider<SplashService>(
+          create: (context) => SplashServiceImpl(
+            splashRepository: context.read(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SplashController(
+            splashService: context.read(),
           ),
         ),
       ],

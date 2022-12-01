@@ -1,33 +1,27 @@
+import 'package:jogadores_da_copa/app/core/database/sqlite_connection_factory.dart';
 import 'package:jogadores_da_copa/app/core/exceptions/failure_exception.dart';
 import 'package:jogadores_da_copa/app/core/logger/app_logger.dart';
-import 'package:jogadores_da_copa/app/core/rest_client/rest_client.dart';
 import 'package:jogadores_da_copa/app/core/rest_client/rest_client_exception.dart';
 import 'package:jogadores_da_copa/app/models/player_model.dart';
 import 'package:jogadores_da_copa/app/repositories/player/player_repository.dart';
 
 class PlayerRepositoryImpl implements PlayerRepository {
-  final RestClient _restClient;
+  final SqliteConnectionFactory _sqliteConnectionFactory;
   final AppLogger _log;
 
   PlayerRepositoryImpl({
-    required RestClient restClient,
+    required SqliteConnectionFactory sqliteConnectionFactory,
     required AppLogger log,
-  })  : _restClient = restClient,
+  })  : _sqliteConnectionFactory = sqliteConnectionFactory,
         _log = log;
 
   @override
-  Future<List<PlayerModel>> getPlayers() async {
+  Future<List<PlayerModel>> getPlayersFromDatabase() async {
     try {
-      final result = await _restClient.get('/players', queryParameters: {
-        'league': 1,
-        'season': 2022,
-      });
+      final conn = await _sqliteConnectionFactory.openConnetion();
+      final result = await conn.rawQuery('SELECT * FROM player;');
 
-      return result.data['response']
-          ?.map<PlayerModel>(
-            (player) => PlayerModel.fromMap(player),
-          )
-          .toList();
+      return result.map((player) => PlayerModel.loadFromDB(player)).toList();
     } on RestClientException catch (e, s) {
       _log.error('Erro ao buscar jogadores', e, s);
       throw FailureException(

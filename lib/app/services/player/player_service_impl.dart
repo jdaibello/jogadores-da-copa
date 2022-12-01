@@ -10,5 +10,6 @@ class PlayerServiceImpl implements PlayerService {
   }) : _playerRepository = playerRepository;
 
   @override
-  Future<List<PlayerModel>> getPlayers() => _playerRepository.getPlayers();
+  Future<List<PlayerModel>> getPlayersFromDatabase() =>
+      _playerRepository.getPlayersFromDatabase();
 }

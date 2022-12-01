@@ -44,9 +44,9 @@ class _AppWidgetState extends State<AppWidget> {
         routes: {
           ...HomeModule().routers,
         },
-        home: const SplashPage(
-            // splashController: context.read(),
-            ),
+        home: SplashPage(
+          splashController: context.read(),
+        ),
       ),
     );
   }

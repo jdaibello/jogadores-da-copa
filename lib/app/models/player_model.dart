@@ -23,6 +23,13 @@ class PlayerModel {
     );
   }
 
+  factory PlayerModel.loadFromDB(Map<String, dynamic> map) {
+    return PlayerModel(
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory PlayerModel.fromJson(String source) =>
