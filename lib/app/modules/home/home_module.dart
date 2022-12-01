@@ -29,7 +29,7 @@ class HomeModule extends JogadoresDaCopaModule {
             ),
           ],
           routers: {
-            '/': (context) => HomePage(
+            '/home': (context) => HomePage(
                   homeController: context.read(),
                 ),
           },

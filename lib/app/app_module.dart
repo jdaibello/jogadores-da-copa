@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jogadores_da_copa/app/app_widget.dart';
+import 'package:jogadores_da_copa/app/core/database/sqlite_connection_factory.dart';
 import 'package:jogadores_da_copa/app/core/local_storage/flutter_secure_storage_local_secure_storage_impl.dart';
 import 'package:jogadores_da_copa/app/core/local_storage/local_secure_storage.dart';
 import 'package:jogadores_da_copa/app/core/local_storage/local_storage.dart';
@@ -21,6 +22,9 @@ class AppModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider(
+          create: (_) => SqliteConnectionFactory(),
+        ),
         Provider<AppLogger>(
           create: (_) => LoggerAppLoggerImpl(),
         ),
