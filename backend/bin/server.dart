@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:jogadores_da_copa_api/app/config/app_config.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 
 // For Google Cloud Run, set _hostname to '0.0.0.0'.
 const _hostname = '0.0.0.0';
 
-void main(List<String> args) async {
+Future<void> main(List<String> args) async {
   var parser = ArgParser()..addOption('port', abbr: 'p');
   var result = parser.parse(args);
 
@@ -21,6 +22,8 @@ void main(List<String> args) async {
     exitCode = 64;
     return;
   }
+
+  await AppConfig().loadAppConfig();
 
   // Configure a pipeline that logs requests.
   final handler = shelf.Pipeline()
