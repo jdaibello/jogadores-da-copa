@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:jogadores_da_copa_api/app/config/app_config.dart';
+import 'package:jogadores_da_copa_api/api/config/api_config.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
+import 'package:shelf_router/shelf_router.dart';
 
 // For Google Cloud Run, set _hostname to '0.0.0.0'.
 const _hostname = '0.0.0.0';
@@ -23,16 +24,14 @@ Future<void> main(List<String> args) async {
     return;
   }
 
-  await AppConfig().loadAppConfig();
+  final router = Router();
+  final apiConfig = ApiConfig();
+  await apiConfig.loadAppConfig(router);
 
   // Configure a pipeline that logs requests.
-  final handler = shelf.Pipeline()
-      .addMiddleware(shelf.logRequests())
-      .addHandler(_echoRequestHandler);
+  final handler =
+      shelf.Pipeline().addMiddleware(shelf.logRequests()).addHandler(router);
 
   final server = await io.serve(handler, _hostname, port);
   print('Serving at http://${server.address.host}:${server.port}');
 }
-
-shelf.Response _echoRequestHandler(shelf.Request request) =>
-    shelf.Response.ok('Request for "${request.url}"');

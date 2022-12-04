@@ -1,4 +1,4 @@
-abstract class Logger {
+abstract class ApiLogger {
   void debug(dynamic message, [dynamic error, StackTrace? stackTrace]);
   void error(dynamic message, [dynamic error, StackTrace? stackTrace]);
   void warning(dynamic message, [dynamic error, StackTrace? stackTrace]);

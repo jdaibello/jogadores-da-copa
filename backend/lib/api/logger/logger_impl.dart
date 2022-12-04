@@ -1,7 +1,7 @@
-import 'package:jogadores_da_copa_api/app/logger/logger.dart';
+import 'package:jogadores_da_copa_api/api/logger/api_logger.dart';
 import 'package:logger/logger.dart' as log;
 
-class LoggerImpl implements Logger {
+class LoggerImpl implements ApiLogger {
   final _logger = log.Logger();
 
   @override
