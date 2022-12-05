@@ -13,7 +13,7 @@ class HomeModule extends JogadoresDaCopaModule {
           bindings: [
             Provider<PlayerRepository>(
               create: (context) => PlayerRepositoryImpl(
-                sqliteConnectionFactory: context.read(),
+                localStorage: context.read(),
                 log: context.read(),
               ),
             ),

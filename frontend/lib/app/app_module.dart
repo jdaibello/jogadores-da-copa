@@ -45,7 +45,7 @@ class AppModule extends StatelessWidget {
         Provider<SplashRepository>(
           create: (context) => SplashRepositoryImpl(
             restClient: context.read(),
-            sqliteConnectionFactory: context.read(),
+            localStorage: context.read(),
             log: context.read(),
           ),
         ),

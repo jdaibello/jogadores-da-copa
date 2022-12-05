@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jogadores_da_copa/app/core/notifier/jogadores_da_copa_change_notifier.dart';
-import 'package:jogadores_da_copa/app/models/player_model.dart';
+import 'package:jogadores_da_copa/app/models/player/player_model.dart';
+import 'package:jogadores_da_copa/app/models/response_model.dart';
 import 'package:jogadores_da_copa/app/services/player/player_service.dart';
 
 class HomeController extends JogadoresDaCopaChangeNotifier {
@@ -15,11 +16,13 @@ class HomeController extends JogadoresDaCopaChangeNotifier {
     showLoading();
     notifyListeners();
 
-    List<PlayerModel> players = await _playerService.getPlayersFromDatabase();
-    playersFetched = players;
+    List<ResponseModel> players =
+        await _playerService.getPlayersDataFromLocalStorage();
+
+    playersFetched = players.map((data) => data.player).toList();
 
     debugPrint(
-      'Number of players fetch from database: ${playersFetched.length}',
+      'Number of players fetch from local storage: ${playersFetched.length}',
     );
 
     hideLoading();

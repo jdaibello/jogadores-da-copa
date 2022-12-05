@@ -1,5 +1,5 @@
-import 'package:jogadores_da_copa/app/models/player_model.dart';
+import 'package:jogadores_da_copa/app/models/response_model.dart';
 
 abstract class PlayerRepository {
-  Future<List<PlayerModel>> getPlayersFromDatabase();
+  Future<List<ResponseModel>> getPlayersDataFromLocalStorage();
 }

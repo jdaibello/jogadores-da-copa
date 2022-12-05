@@ -1,10 +1,10 @@
 import 'package:jogadores_da_copa/app/core/notifier/jogadores_da_copa_change_notifier.dart';
-import 'package:jogadores_da_copa/app/models/player_model.dart';
+import 'package:jogadores_da_copa/app/models/response_model.dart';
 import 'package:jogadores_da_copa/app/services/splash/splash_service.dart';
 
 class SplashController extends JogadoresDaCopaChangeNotifier {
   final SplashService _splashService;
-  List<PlayerModel> playersFetched = [];
+  List<ResponseModel> playersFetched = [];
 
   SplashController({
     required SplashService splashService,
@@ -14,7 +14,9 @@ class SplashController extends JogadoresDaCopaChangeNotifier {
     showLoading();
     notifyListeners();
 
-    List<PlayerModel> players = await _splashService.fetchPlayersFromApi();
+    List<ResponseModel> players =
+        await _splashService.fetchPlayersDataFromApi();
+
     playersFetched = players;
 
     hideLoading();
@@ -25,7 +27,7 @@ class SplashController extends JogadoresDaCopaChangeNotifier {
     showLoading();
     notifyListeners();
 
-    await _splashService.populatePlayers(playersFetched);
+    await _splashService.populatePlayersData(playersFetched);
 
     hideLoading();
     notifyListeners();

@@ -1,7 +1,7 @@
-import 'package:jogadores_da_copa/app/models/player_model.dart';
+import 'package:jogadores_da_copa/app/models/response_model.dart';
 
 abstract class SplashService {
-  Future<List<PlayerModel>> fetchPlayersFromApi();
-  Future<void> populatePlayers(List<PlayerModel> players);
-  Future<void> savePlayerToLocalDatabase(PlayerModel player);
+  Future<List<ResponseModel>> fetchPlayersDataFromApi();
+  Future<void> populatePlayersData(List<ResponseModel> playersData);
+  Future<void> savePlayerToLocalStorage(ResponseModel playerData);
 }

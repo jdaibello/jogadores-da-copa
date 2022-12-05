@@ -1,27 +1,37 @@
-import 'package:jogadores_da_copa/app/core/database/sqlite_connection_factory.dart';
+import 'dart:convert';
+
 import 'package:jogadores_da_copa/app/core/exceptions/failure_exception.dart';
+import 'package:jogadores_da_copa/app/core/helpers/constants.dart';
+import 'package:jogadores_da_copa/app/core/local_storage/local_storage.dart';
 import 'package:jogadores_da_copa/app/core/logger/app_logger.dart';
 import 'package:jogadores_da_copa/app/core/rest_client/rest_client_exception.dart';
-import 'package:jogadores_da_copa/app/models/player_model.dart';
+import 'package:jogadores_da_copa/app/models/api_football_response_model.dart';
+import 'package:jogadores_da_copa/app/models/player/player_model.dart';
+import 'package:jogadores_da_copa/app/models/response_model.dart';
 import 'package:jogadores_da_copa/app/repositories/player/player_repository.dart';
 
 class PlayerRepositoryImpl implements PlayerRepository {
-  final SqliteConnectionFactory _sqliteConnectionFactory;
+  final LocalStorage _localStorage;
   final AppLogger _log;
 
   PlayerRepositoryImpl({
-    required SqliteConnectionFactory sqliteConnectionFactory,
+    required LocalStorage localStorage,
     required AppLogger log,
-  })  : _sqliteConnectionFactory = sqliteConnectionFactory,
+  })  : _localStorage = localStorage,
         _log = log;
 
   @override
-  Future<List<PlayerModel>> getPlayersFromDatabase() async {
+  Future<List<ResponseModel>> getPlayersDataFromLocalStorage() async {
     try {
-      final conn = await _sqliteConnectionFactory.openConnetion();
-      final result = await conn.rawQuery('SELECT * FROM player;');
+      final jsonData = await _localStorage.read<String>(
+          Constants.API_FOOTBALL_RESPONSE_JSON_WITHOUT_PAGINATION);
 
-      return result.map((player) => PlayerModel.loadFromDB(player)).toList();
+      final ApiFootballResponseModel responseModelDecoded =
+          ApiFootballResponseModel.fromJson(
+        json.decode(jsonData!),
+      );
+
+      return responseModelDecoded.response!.toList();
     } on RestClientException catch (e, s) {
       _log.error('Erro ao buscar jogadores', e, s);
       throw FailureException(

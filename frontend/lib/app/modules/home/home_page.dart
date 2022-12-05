@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jogadores_da_copa/app/core/notifier/jogadores_da_copa_listener_notifier.dart';
-import 'package:jogadores_da_copa/app/models/player_model.dart';
+import 'package:jogadores_da_copa/app/models/player/player_model.dart';
 import 'package:jogadores_da_copa/app/modules/home/home_controller.dart';
+import 'package:jogadores_da_copa/app/modules/home/widgets/player_list_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final HomeController _homeController;
@@ -30,10 +32,13 @@ class _HomePageState extends State<HomePage> {
     );
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await widget._homeController.getPlayers();
-      List<PlayerModel> players = widget._homeController.playersFetched;
-      debugPrint('$players');
+      await _loadPlayers();
     });
+  }
+
+  Future<void> _loadPlayers() async {
+    await widget._homeController.getPlayers();
+    players = widget._homeController.playersFetched;
   }
 
   @override
@@ -43,7 +48,23 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Home Page'),
         centerTitle: true,
       ),
-      body: Container(),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: Theme.of(context).primaryColorLight,
+        child: Column(
+          children: [
+            Consumer<HomeController>(
+              builder: (context, value, child) {
+                return Expanded(
+                  child: PlayerListWidget(
+                    controller: value,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -6,8 +6,15 @@ class MigrationV1 extends Migration {
   void create(Batch batch) {
     batch.execute('''
       CREATE TABLE player (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        name TEXT NOT NULL, 
+        age INTEGER NOT NULL, 
+        dateOfBirth TEXT, 
+        placeOfBirth TEXT, 
+        nationality TEXT NOT NULL, 
+        height TEXT, 
+        weight TEXT, 
+        photoUrl TEXT
       )
     ''');
   }

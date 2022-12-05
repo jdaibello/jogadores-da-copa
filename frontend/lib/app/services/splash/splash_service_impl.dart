@@ -1,4 +1,4 @@
-import 'package:jogadores_da_copa/app/models/player_model.dart';
+import 'package:jogadores_da_copa/app/models/response_model.dart';
 import 'package:jogadores_da_copa/app/repositories/splash/splash_repository.dart';
 import 'package:jogadores_da_copa/app/services/splash/splash_service.dart';
 
@@ -10,14 +10,14 @@ class SplashServiceImpl implements SplashService {
   }) : _splashRepository = splashRepository;
 
   @override
-  Future<List<PlayerModel>> fetchPlayersFromApi() =>
-      _splashRepository.fetchPlayersFromApi();
+  Future<List<ResponseModel>> fetchPlayersDataFromApi() =>
+      _splashRepository.fetchPlayersDataFromApi();
 
   @override
-  Future<void> populatePlayers(List<PlayerModel> players) =>
-      _splashRepository.populatePlayers(players);
+  Future<void> populatePlayersData(List<ResponseModel> playersData) =>
+      _splashRepository.populatePlayers(playersData);
 
   @override
-  Future<void> savePlayerToLocalDatabase(PlayerModel player) =>
-      _splashRepository.savePlayerToLocalDatabase(player);
+  Future<void> savePlayerToLocalStorage(ResponseModel playerData) =>
+      _splashRepository.savePlayerDataToLocalStorage(playerData);
 }

@@ -10,4 +10,7 @@ class Constants {
       'REST_CLIENT_RECEIVE_TIMEOUT';
 
   static const ENV_APISPORTS_KEY = 'x-apisports-key';
+
+  static const API_FOOTBALL_RESPONSE_JSON_WITHOUT_PAGINATION =
+      'player_data.json';
 }
