@@ -5,6 +5,7 @@ import 'package:jogadores_da_copa/app/core/local_storage/local_storage.dart';
 import 'package:jogadores_da_copa/app/core/logger/app_logger.dart';
 import 'package:jogadores_da_copa/app/core/rest_client/rest_client.dart';
 import 'package:jogadores_da_copa/app/core/rest_client/rest_client_exception.dart';
+import 'package:jogadores_da_copa/app/models/api_football_response_model.dart';
 import 'package:jogadores_da_copa/app/models/paging_model.dart';
 import 'package:jogadores_da_copa/app/models/response_model.dart';
 import 'package:jogadores_da_copa/app/repositories/splash/splash_repository.dart';
@@ -44,14 +45,20 @@ class SplashRepositoryImpl implements SplashRepository {
         if (pagingModel.current < pagingModel.total) {
           auxPage = pagingModel.current + 1;
 
-          // TODO: Fix "Unhandled Exception: type 'List<dynamic>' is not a subtype of type 'Iterable<ResponseModel>'"
-          playersData.addAll(await result.data['response']);
+          // TODO: Need to fix "'Unhandled Exception: type 'MappedListIterable<dynamic, List<ResponseModel>?>' is not a subtype of type 'Iterable<ResponseModel>'" error
+          playersData.addAll(
+            await result.data['response']?.map<List<ResponseModel>?>(
+              (playerData) => ApiFootballResponseModel.fromJson(playerData)
+                  .response
+                  ?.toList(),
+            ),
+          );
 
           //* unfortunately, because of the API rate limit (10 requests/min),
           //* we need to wait some time beetween the first and the last request.
-          await Future.delayed(const Duration(seconds: 5));
+          // await Future.delayed(const Duration(seconds: 5));
 
-          playersData = await fetchPlayersDataFromApi();
+          // playersData = await fetchPlayersDataFromApi();
         }
 
         return playersData;
