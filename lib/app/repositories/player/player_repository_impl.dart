@@ -24,7 +24,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
       );
       jsonData ??= [];
 
-      return jsonData.map((e) => ResponseModel.fromJson(e)).toList();
+      return jsonData.map((r) => ResponseModel.fromJson(r)).toList();
     } on RestClientException catch (e, s) {
       _log.error('Erro ao buscar jogadores', e, s);
       throw FailureException(

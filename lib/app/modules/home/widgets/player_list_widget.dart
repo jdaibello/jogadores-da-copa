@@ -37,11 +37,19 @@ class _PlayerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Text(
-        _response.player.name,
+    return Card(
+      margin: const EdgeInsets.all(6),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: ListTile(
+          leading: CircleAvatar(
+            child: Image.network(_response.player.photo!),
+          ),
+          trailing: Text(_response.player.nationality ?? 'Unknown nationality'),
+          title: Text(_response.player.name),
+          subtitle: Text(_response.player.birth.date!),
+        ),
       ),
-      trailing: Text(_response.player.nationality ?? 'Unknown nationality'),
     );
   }
 }
